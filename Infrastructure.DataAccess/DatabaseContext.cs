@@ -22,6 +22,7 @@ public class DatabaseContext : DbContext, IDatabaseContext
     public DbSet<Reservation> Reservations { get; private set;} = null!;
 
     public DbSet<User> Users { get; private set;} = null!;
+    public DbSet<Location> Locations { get; private set;} = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

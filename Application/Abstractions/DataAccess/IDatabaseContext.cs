@@ -10,6 +10,7 @@ public interface IDatabaseContext
     DbSet<Review> Reviews { get; }
     DbSet<Reservation> Reservations { get; }
     DbSet<User> Users { get; }
+    DbSet<Location> Locations { get; }
 
     Task<int> SaveChangesAsync(CancellationToken token = default);
 }

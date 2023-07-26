@@ -10,12 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddControllers().AddJsonOptions(x =>
-    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+/*builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);*/
 builder.Services.
     AddApplication().
     AddJwtProvider().
-    AddDataAccess(x => x.UseLazyLoadingProxies().UseSqlite("Data Source=database.db")).
+    AddDataAccess(x => x.UseLazyLoadingProxies().UseSqlite(builder.Configuration["Database:ConnectionString"])).
     AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

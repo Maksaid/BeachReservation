@@ -58,4 +58,12 @@ public class ReviewController : ControllerBase
         await _mediator.Send(command, CancellationToken);
         return Ok();
     }
+    
+    [HttpGet("get-beach-reviews")]
+    public async Task<ActionResult<List<ReviewDto>>> GetBeachReviews(Guid beachId)
+    {
+        var command = new GetBeachReviews.Command();
+        var response = await _mediator.Send(command, CancellationToken);
+        return Ok(response.ReviewDtos);
+    }
 }

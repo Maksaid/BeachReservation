@@ -14,10 +14,13 @@ public class GetAllBeachesHandler : IRequestHandler<Command,Response>
     {
         _context = context;
     }
-    
+    /*
+     * returns List<BeachDto> of sorted by AverageScore Beaches
+     */
     public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
     {
-        var beaches = await _context.Beaches.ToListAsync();
-        return new Response(beaches.Select(x => x.AsDto()).ToList());
+        var beaches = await _context.Beaches.ToListAsync(cancellationToken);
+        var sortedBeaches = beaches.OrderBy(x => x.AverageScore);
+        return new Response(sortedBeaches.Select(x => x.AsDto()).ToList());
     }
 }
