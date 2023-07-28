@@ -3,6 +3,7 @@ using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Configuration;
+using Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => { options.IncludeErrorDetails = true; });
 builder.Services.ConfigureOptions<JwtOptionSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionSetup>();
-
+builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 var app = builder.Build();
 
@@ -50,6 +51,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

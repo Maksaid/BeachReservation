@@ -51,7 +51,7 @@ public class BeachController : ControllerBase
     }
 
     [HttpGet("get-all-beaches")]
-    public async Task<ActionResult<List<BeachDto>>> GetAllBeaches()
+    public async Task<ActionResult<List<BeachShortDto>>> GetAllBeaches()
     {
         var command = new GetAllBeaches.Command();
         var response = await _mediator.Send(command, CancellationToken);
