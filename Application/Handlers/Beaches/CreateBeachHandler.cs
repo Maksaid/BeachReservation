@@ -22,7 +22,7 @@ internal class CreateBeachHandler : IRequestHandler<Command, Response>
         var owner = await _context.Users.GetEntityAsync(request.CurrentUserId, cancellationToken);
         var beach = new Beach(Guid.NewGuid(), request.Name, request.Description, request.ColsCount, request.RowsCount,owner,new Location(request.Country, request.City, request.Longitude, request.Latitude));
         owner.Beaches.Add(beach);
-        _context.Beaches.Add(beach);
+        await _context.Beaches.AddEntityAsync(beach,cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
         return new Response(beach.AsDto());

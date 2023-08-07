@@ -15,4 +15,16 @@ public static class DbSetExtensions
 
         return entity;
     }
+
+    public static async Task AddEntityAsync<T>(this DbSet<T> set, T entity, CancellationToken cancellationToken)
+        where T : class
+    {
+        var alreadyExists= set.ToList().Contains(entity);
+       // var alreadyExists = await set.ContainsAsync(entity, cancellationToken);
+
+        if (alreadyExists)
+            throw EntityAlreadyExistException<T>.Create(entity);
+
+        await set.AddAsync(entity, cancellationToken);
+    }
 }

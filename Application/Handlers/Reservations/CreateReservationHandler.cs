@@ -29,7 +29,7 @@ public class CreateReservationHandler : IRequestHandler<Command, Response>
             user.Reservations.Add(reservation);
         umbrella.AddReservation(reservation);
 
-        _context.Reservations.Add(reservation);
+        await _context.Reservations.AddEntityAsync(reservation, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
         return new Response(reservation.AsDto());

@@ -27,7 +27,7 @@ public class CreateReviewHandler : IRequestHandler<Command,Response>
         var review = new Review(Guid.NewGuid(), request.Text, request.ReviewScore, author, beach);
         beach.Reviews.Add(review);
         author.Reviews.Add(review);
-        _context.Reviews.Add(review);
+        await _context.Reviews.AddEntityAsync(review, cancellationToken);
 
         await _context.SaveChangesAsync(cancellationToken);
         return new Response(review.AsDto());

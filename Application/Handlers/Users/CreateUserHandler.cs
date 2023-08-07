@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.DataAccess;
 using Application.Exceptions;
+using Application.Extensions;
 using Application.Mapping;
 using Domain.Entities;
 using MediatR;
@@ -20,11 +21,7 @@ public class CreateUserHandler : IRequestHandler<Command, Response>
     public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
     {
         var user = new User(Guid.NewGuid(), request.Name, request.Email, request.Password.Hash(), request.Phone);
-        if (await _context.Users.ContainsAsync(user,cancellationToken))
-        {
-            throw new UserAlreadyExistsException("this user already exists");
-        }
-        _context.Users.Add(user);
+        await _context.Users.AddEntityAsync(user, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return new Response(user.AsDto());
     }

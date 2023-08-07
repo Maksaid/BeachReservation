@@ -45,6 +45,7 @@ public class BeachController : ControllerBase
     [HttpGet("get-beach")]
     public async Task<ActionResult<BeachDto>> GetBeachById(Guid beachId)
     {
+        Console.WriteLine(beachId);
         var command = new GetBeachById.Command(beachId);
         var response = await _mediator.Send(command, CancellationToken);
         return Ok(response.BeachDto);

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class User
+public class User : IEquatable<User>
 {
     public User(Guid id, string name, string email, string password, string phone)
     {
@@ -26,4 +26,26 @@ public class User
     public virtual List<Beach> Beaches { get; set; } = new List<Beach>();
     public virtual List<Reservation> Reservations { get; set; } = new List<Reservation>();
     public virtual List<Review> Reviews { get; set; } = new List<Review>();
+    
+    
+
+    public bool Equals(User? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Email == other.Email && Phone == other.Phone;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((User)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Email, Phone);
+    }
 }
