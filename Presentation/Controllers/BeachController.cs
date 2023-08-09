@@ -34,6 +34,7 @@ public class BeachController : ControllerBase
         var command = new CreateBeach.Command(Guid.Parse(currUserId.Value), beachModel.Name, beachModel.Description,
             beachModel.RowsCount,
             beachModel.ColsCount,
+            beachModel.Indexes,
             beachModel.Country,
             beachModel.City,
             beachModel.Longitude,

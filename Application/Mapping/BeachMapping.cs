@@ -1,4 +1,5 @@
-﻿using Application.Dto;
+﻿using System.Text;
+using Application.Dto;
 using Domain.Entities;
 
 namespace Application.Mapping;
@@ -15,4 +16,6 @@ public static class BeachMapping
     }
 
     private static List<UmbrellaDto> MapUmbrellas(List<Umbrella> umbrellas) => umbrellas.Select(x => x.AsDto()).ToList();
+
+    
 }

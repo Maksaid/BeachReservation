@@ -4,12 +4,13 @@ namespace Domain.Entities;
 
 public class Umbrella
 {
-    public Umbrella(Guid id, int number, Beach beach)
+    public Umbrella(Guid id, int number, int index, Beach beach)
     {
         Id = id;
         Number = number;
         Reservations = new List<Reservation>();
         Beach = beach;
+        Index = index;
     }
 
     protected Umbrella()
@@ -18,6 +19,7 @@ public class Umbrella
 
     public Guid Id { get; set; }
     public int Number { get; set; }
+    public int Index { get; set; }
 
     public virtual Beach Beach { get; set; }
     public virtual List<Reservation> Reservations { get; set; } = new();
