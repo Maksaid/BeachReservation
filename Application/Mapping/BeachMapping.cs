@@ -8,7 +8,7 @@ public static class BeachMapping
 {
     public static BeachDto AsDto(this Beach beach)
     {
-        return new BeachDto(beach.Name,beach.Id, beach.Description,beach.AverageScore, beach.Owner.AsDto(), beach.ColumnsCount, beach.RowsCount,MapUmbrellas(beach.Umbrellas),beach.Location.Country,beach.Location.City);
+        return new BeachDto(beach.Name,beach.Id, beach.Description,beach.AverageScore, beach.Owner.AsDto(), beach.ColumnsCount, beach.RowsCount,MapUmbrellas(beach.Umbrellas),beach.Location.Country,beach.Location.City, beach.BeachImages);
     }
     public static BeachShortDto AsShortDto(this Beach beach)
     {
