@@ -21,6 +21,8 @@ public class DatabaseContext : DbContext, IDatabaseContext
 
     public DbSet<Reservation> Reservations { get; private set;} = null!;
 
+    public DbSet<Image> Images { get; private set; } = null!;
+
     public DbSet<User> Users { get; private set;} = null!;
     public DbSet<Location> Locations { get; private set;} = null!;
 
