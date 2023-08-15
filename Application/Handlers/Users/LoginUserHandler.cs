@@ -22,9 +22,9 @@ internal  class LoginUserHandler : IRequestHandler<Command, Response>
         {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(request.Email), cancellationToken);
         if (user is null)
-            throw new WrongCredentialsException("no user with such email");
+            throw new WrongCredentialsException("wrong email or password");
         if (user.Password != request.Password.Hash())
-            throw new WrongCredentialsException("wrong password");
+            throw new WrongCredentialsException("wrong email or password");
 
         string token = _jwtProvider.Generate(user);
 
