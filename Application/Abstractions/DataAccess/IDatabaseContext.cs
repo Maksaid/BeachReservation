@@ -11,6 +11,8 @@ public interface IDatabaseContext
     DbSet<Reservation> Reservations { get; }
     DbSet<User> Users { get; }
     DbSet<Location> Locations { get; }
+    
+    DbSet<Image> Images { get; }
 
     Task<int> SaveChangesAsync(CancellationToken token = default);
 }
