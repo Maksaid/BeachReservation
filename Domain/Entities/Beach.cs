@@ -21,6 +21,7 @@ public class Beach : IEquatable<Beach>
         Location = location;
         Reviews = new List<Review>();
         Umbrellas = new List<Umbrella>();
+        BeachImages = new();
         CreateUmbrellas(indexes);
     }
 
@@ -35,6 +36,8 @@ public class Beach : IEquatable<Beach>
     public string Description { get; set; }
     public virtual List<Review> Reviews { get; set; }
     public virtual List<Umbrella> Umbrellas { get; set; }
+    
+    public virtual List<Image> BeachImages { get; set; }
     public int ColumnsCount { get; set; }
     public int RowsCount { get; set; }
     public virtual Location Location { get; set; }
