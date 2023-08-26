@@ -1,3 +1,3 @@
 ﻿namespace Application.Dto;
 
-public record UserDto(Guid Id, string Login, string Phone);
+public record UserDto(Guid Id, string UserName, string Login, string Phone);

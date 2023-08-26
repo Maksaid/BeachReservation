@@ -27,8 +27,9 @@ internal  class LoginUserHandler : IRequestHandler<Command, Response>
             throw new WrongCredentialsException("wrong email or password");
 
         string token = _jwtProvider.Generate(user);
-
-        return new Response(token);
+        
+        
+        return new Response(token, user.AsDto());
     }
     
 }

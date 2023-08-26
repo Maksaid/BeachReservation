@@ -1,7 +1,8 @@
-using System.Text.Json.Serialization;
+    using System.Text.Json.Serialization;
 using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.EntityFrameworkCore;
 using Presentation.Configuration;
 using Presentation.Middlewares;
 
@@ -34,6 +35,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.ConfigureOptions<JwtOptionSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionSetup>();
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 20971520;
+});
 
 var app = builder.Build();
 

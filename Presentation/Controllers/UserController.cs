@@ -1,6 +1,7 @@
 ﻿using Application.Contracts.Users;
 using Application.Dto;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 
@@ -17,10 +18,11 @@ public class UserController : ControllerBase
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> LoginUser([FromBody] LoginUser.Command command, CancellationToken cancellationToken)
+        public async Task<ActionResult<LoginUser.Response>> LoginUser([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
         {
-            var token = await _mediator.Send(command, cancellationToken);
-            return Ok(token);
+            var request = new LoginUser.Command(loginModel.Email, loginModel.Password);
+            var tokenAndUserData = await _mediator.Send(request, cancellationToken);
+            return Ok(tokenAndUserData);
         }
 
         [HttpPost("register")]
@@ -30,5 +32,13 @@ public class UserController : ControllerBase
             var command = new CreateUser.Command(userModel.Name, userModel.Email, userModel.Password, userModel.Phone);
             var newUser = await _mediator.Send(command, cancellationToken);
             return Ok(newUser);
+        }
+
+        [Authorize]
+        [HttpPost("is-logged-in")]
+        public OkObjectResult IsLoggedIn()
+        {
+            var resp = new EmptyResponse();
+            return Ok(resp);
         }
 }

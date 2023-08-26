@@ -36,7 +36,6 @@ public class ReviewController : ControllerBase
         var response = await _mediator.Send(command, CancellationToken);
         return Ok(response.ReviewDto); 
     }
-    
     [Authorize]
     [HttpPost("update-review")]
     public async Task<ActionResult<ReviewDto>> UpdateAsync([FromBody] UpdateReviewModel reviewModel)
@@ -50,7 +49,7 @@ public class ReviewController : ControllerBase
         var response = await _mediator.Send(command, CancellationToken);
         return Ok(response.ReviewDto); 
     }
-    
+    [Authorize]
     [HttpDelete("delete-review")]
     public async Task<ActionResult> DeleteReview(Guid reviewId)
     {

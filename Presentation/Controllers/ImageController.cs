@@ -2,7 +2,9 @@
 using Application.Contracts.Users;
 using Application.Dto;
 using Domain.Entities;
+using Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 
@@ -17,14 +19,24 @@ public class ImageController : ControllerBase
     {
         _mediator = mediator;
     }
+    public CancellationToken CancellationToken => HttpContext.RequestAborted;
 
-    
-    [HttpPost("add-images")]
-    public async Task<ActionResult<BeachDto>> AddImagesAsync([FromBody] ImageModel imageToAdd,
-        CancellationToken cancellationToken)
+
+    [Authorize]
+    [HttpPost("add-background-image")]
+    public async Task<ActionResult<BeachDto>> AddImagesAsync([FromForm] IFormFile file, [FromForm] Guid beachId)
     {
-        var command = new AddImages.Command(imageToAdd.Data,imageToAdd.BeachId,imageToAdd.PictureType);
-        var updatedBeach = await _mediator.Send(command, cancellationToken);
+        var command = new AddImages.Command(ConvertFormFileToByteArray(file),beachId);
+        var updatedBeach = await _mediator.Send(command, CancellationToken);
         return Ok(updatedBeach);
+    }
+    
+    private byte[] ConvertFormFileToByteArray(IFormFile file)
+    {
+        using (var memoryStream = new MemoryStream())
+        {
+            file.CopyTo(memoryStream);
+            return memoryStream.ToArray();
+        }
     }
 }

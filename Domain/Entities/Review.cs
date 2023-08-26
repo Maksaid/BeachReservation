@@ -9,6 +9,7 @@ public class Review
         Text = text;
         Author = author;
         Score = reviewScore;
+        Date = DateTime.Now;
     }
 
     protected Review()
@@ -20,4 +21,6 @@ public class Review
     public Guid Id { get; set; }
     public string Text { get; set; }
     public virtual User Author { get; set; }
+    
+    public DateTime Date { get; set; }
 }
