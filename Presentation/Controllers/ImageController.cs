@@ -24,19 +24,26 @@ public class ImageController : ControllerBase
 
     [Authorize]
     [HttpPost("add-background-image")]
-    public async Task<ActionResult<BeachDto>> AddImagesAsync([FromForm] IFormFile file, [FromForm] Guid beachId)
+    public async Task<ActionResult<BeachDto>> AddImagesAsync([FromForm] IFormFile[] files, [FromForm] Guid beachId)
     {
-        var command = new AddImages.Command(ConvertFormFileToByteArray(file),beachId);
+        var command = new AddImages.Command(ConvertFormFileToByteArray(files),beachId);
         var updatedBeach = await _mediator.Send(command, CancellationToken);
         return Ok(updatedBeach);
     }
     
-    private byte[] ConvertFormFileToByteArray(IFormFile file)
+    private List<byte[]> ConvertFormFileToByteArray(IFormFile[] files)
     {
-        using (var memoryStream = new MemoryStream())
+        List<byte[]> byteArrays = new List<byte[]>();
+        
+        foreach (var file in files)
         {
-            file.CopyTo(memoryStream);
-            return memoryStream.ToArray();
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                byteArrays.Add(memoryStream.ToArray());
+            }
         }
+
+        return byteArrays;
     }
 }

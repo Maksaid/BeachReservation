@@ -22,8 +22,11 @@ public class AddBackgroundImageHandler : IRequestHandler<Command,Response>
     public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
     {
         var beach = await _context.Beaches.GetEntityAsync(request.BeachId, cancellationToken);
-        Image newImage = new Image(Guid.NewGuid(), request.Data, request.BeachId, PictureType.BackgroundPhoto);
-        await _context.Images.AddEntityAsync(newImage, cancellationToken);
+        foreach (var byteArray in request.Data)
+        {
+            await _context.Images.AddEntityAsync(new Image(Guid.NewGuid(), byteArray, request.BeachId),cancellationToken);
+        }
+        
         // beach.BeachImages.Add(newImage);
         await _context.SaveChangesAsync(cancellationToken);
 

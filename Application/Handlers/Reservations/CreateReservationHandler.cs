@@ -26,7 +26,6 @@ public class CreateReservationHandler : IRequestHandler<Command, Response>
             throw new NotFoundException($"umbrella with id: {request.UmbrellaId} was not found");
 
         var reservation = new Reservation(Guid.NewGuid(),request.DateFrom, request.DateTo,user, umbrella);
-            user.Reservations.Add(reservation);
         umbrella.AddReservation(reservation);
 
         await _context.Reservations.AddEntityAsync(reservation, cancellationToken);

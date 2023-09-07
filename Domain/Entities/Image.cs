@@ -4,12 +4,11 @@ namespace Domain.Entities;
 
 public class Image
 {
-    public Image(Guid id, byte[] data, Guid beachId, PictureType pictureType)
+    public Image(Guid id, byte[] data, Guid beachId)
     {
         Id = id;
         Data = data;
         BeachId = beachId;
-        ImageType = pictureType.ToString();
     }
 
     protected Image()
@@ -21,5 +20,4 @@ public class Image
     
     public Guid? BeachId { get; set; }
     
-    public string ImageType { get; set; }
 }

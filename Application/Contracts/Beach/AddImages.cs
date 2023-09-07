@@ -6,7 +6,7 @@ namespace Application.Contracts.Beach;
 
 public static class AddImages
 {
-    public record struct Command(byte[] Data, Guid BeachId) : IRequest<Response>
+    public record struct Command(List<byte[]> Data, Guid BeachId) : IRequest<Response>
     {
     }
 

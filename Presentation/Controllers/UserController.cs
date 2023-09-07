@@ -34,11 +34,12 @@ public class UserController : ControllerBase
             return Ok(newUser);
         }
 
-        [Authorize]
-        [HttpPost("is-logged-in")]
-        public OkObjectResult IsLoggedIn()
+        [HttpGet("get-user-details")]
+
+        public async Task<ActionResult<UserDetailsDto>> GetUserDetailsAsync(Guid id, CancellationToken cancellationToken)
         {
-            var resp = new EmptyResponse();
-            return Ok(resp);
+            var command = new GetUserDetails.Command(id);
+            var userDetails = await _mediator.Send(command, cancellationToken);
+            return Ok(userDetails);
         }
 }
